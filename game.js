@@ -22,30 +22,24 @@ loadSprite('sm-alien', 'tileset/aliens/sm-alien.png')
 
 
 
-scene('game', () => {
+scene('game', (
+  // {level, score}
+  ) => {
+  layers(['backgrnd', 'obj', 'ui'], 'obj')
     const maps = [
-      'xhhhhhhhhhhhhhhw',
+      'xhhhhhhhhhh hhhw',
       'v              v',
-      'v      a        v',
-      'v              v',
-      'v       r      v',
+      'v      a       v',
       'v              v',
       'v              v',
       'v              v',
+      '               v',
+      'v     a         v',
       'v              v',
       'zhhhhhhhhhhhhhhy'
     ]
 
-      // 'xhhhhhhhhhhhhhhw',
-      // 'vffffffffffffffv',
-      // 'vffffffffffffffv',
-      // 'vffffffffffffffv',
-      // 'vffffffffffffffv',
-      // 'vffffffffffffffv',
-      // 'vffffffffffffffv',
-      // 'vffffffffffffffv',
-      // 'vffffffffffffffv',
-      // 'zhhhhhhhhhhhhhhy']
+ 
     const levelConfig = {
       width: 32,
       height: 32,
@@ -60,10 +54,36 @@ scene('game', () => {
       'r' : [sprite('good-guy-rt'), 'ggr'],
       'l' : [sprite('good-guy-lt'), 'ggl'],
       'd' : [sprite('good-guy-down'), 'ggd'],
-      'r' : [sprite('good-guy-up'), 'up'],
+      'u' : [sprite('good-guy-up'), 'up'],
       'a' : [sprite('sm-alien'), 'sm-all', scale(0.15)]
 
     }
     addLevel(maps, levelConfig)
+
+    const player = add([sprite('good-guy-rt'),
+    pos(5, 190)
+    ])
+    const playerSpeed = 120
+    keyDown('left', () => {
+      player.changeSprite('good-guy-lt')
+      player.move(-playerSpeed, 0)
+    })
+      keyDown('right', () => {
+        player.changeSprite('good-guy-rt')
+      player.move(playerSpeed, 0)
+    })
+      keyDown('up', () => {
+        player.changeSprite('good-guy-up')
+      player.move(0, -playerSpeed)
+    })
+     keyDown('down', () => {
+       player.changeSprite('good-guy-down')
+      player.move(0, playerSpeed)
+    })
+
+    
+    
 }),
-start('game')
+start('game', 
+// {level: 0, score: 0}
+)
