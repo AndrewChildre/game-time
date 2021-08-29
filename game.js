@@ -1,27 +1,29 @@
 kaboom({
   global: true,
   fullscreen: true,
-  scale: 1.2,
+  
   debug: true,
-  clearColor: [0, 0, 0, 0.8]
+  clearColor: [0, 0, 0, 0.8],
+
 })
 
 
-loadSprite('top-rt-cnr', 'tileset/tileMapSpace05.png')
-loadSprite('top-left-cnr', 'tileset/tileMapSpace21.png')
-loadSprite('bottom-right-cnr', 'tileset/tileMapSpace10.png')
-loadSprite('bottom-left-cnr', 'tileset/tileMapSpace12.png')
-loadSprite('wall-vert', 'tileset/tileMapSpace07.png')
-loadSprite('wall-hztl', 'tileset/tileMapSpace04.png')
+
+loadSprite('wall1', 'assets/wall1.png')
+
+
+
+
 loadSprite('floor', 'tileset/tileMapSpace08.png')
-loadSprite('good-guy-rt', 'tileset/player.4/good-guy07.png')
-loadSprite('good-guy-lt', 'tileset/player.4/good-guy10.png')
-loadSprite('good-guy-down', 'tileset/player.4/good-guy01.png')
-loadSprite('good-guy-up', 'tileset/player.4/good-guy04.png')
-loadSprite('sm-alien', 'tileset/aliens/sm-alien.png')
-loadSprite('stair', 'tileset/stair.png')
-loadSprite('door', 'tileset/tileMapSpace48.png')
-loadSprite('bad-guy', 'tileset/bad-guy.png')
+loadSprite('good-guy-rt', 'assets/hood_dudes33.png')
+loadSprite('good-guy-lt', 'assets/hood_dudes21.png')
+loadSprite('good-guy-down', 'assets/hood_dudes09.png')
+loadSprite('good-guy-up', 'assets/hood_dudes45.png')
+loadSprite('sm-alien', 'assets/hood_dudes03.png')
+loadSprite('stairL', 'assets/stairs0.png')
+loadSprite('stairR', 'assets/stairs2.png')
+loadSprite('door', 'assets/floor-door00.png')
+loadSprite('bad-guy', 'assets/bad-guy.png')
 loadSprite('kaboom', 'tileset/kaboom.png')
 
 
@@ -32,27 +34,27 @@ scene('game', (
   layers(['backgrnd', 'obj', 'ui'], 'obj')
   const maps = [
     [
-      'xhhhhhhhhhhdhhhw',
+      'vvvvvvvvvvvvdvvv',
       'v              v',
-      'v             v',
+      'v       a      v',
       'v              v',
-      'v     a        v',
+      'v              d',
       'v              v',
-      '               v',
+      'v        a     v',
       'v              v',
-      'v              v',
-      'zhhhhhhhhhhhhhhy'
+      'v    st        v',
+      'vvvvvvvvvvvvvvvv'
     ],
-    ['xhhhhhhhhhhdhhhw',
-    'v              v',
-    'v              v',
-    'v              v',
-    'v              v',
-    'v        b     v',
-    'v              v',
-    'v   s          v',
-    'v              v',
-    'zhhhhhhhhhhhhhhy'],
+    [ 'vvvvvvvvvvvvvvvv',
+      'v              v',
+      'v              v',
+      'v              v',
+      'v              v',
+      'v           b  v',
+      'd              v',
+      'v              v',
+      'v              v',
+      'vvvvvvvvvvvvvvvv'],
 
   ]
 
@@ -60,26 +62,24 @@ scene('game', (
 
 
   const levelConfig = {
-    width: 32,
-    height: 32,
+    width: 48,
+    height: 48,
 
 
 
-    'w': [sprite('top-rt-cnr'), solid(), 'wall'],
-    'x': [sprite('top-left-cnr'), solid(), 'wall'],
-    'y': [sprite('bottom-right-cnr'), solid(), 'wall'],
-    'z': [sprite('bottom-left-cnr'), solid(), 'wall'],
-    'v': [sprite('wall-vert'), solid(), 'wall'],
-    'h': [sprite('wall-hztl'), solid(), 'wall'],
+    
+  
+    'v': [sprite('wall1'), solid(), 'wall1'],
     'f': [sprite('floor'), 'floor'],
-    'r': [sprite('good-guy-rt'), 'ggr'],
+    'r' : [sprite('good-guy-rt'), 'ggr'],
     'l': [sprite('good-guy-lt'), 'ggl'],
     'd': [sprite('good-guy-down'), 'ggd'],
     'u': [sprite('good-guy-up'), 'up'],
-    'a': [sprite('sm-alien'), 'sm-alien', 'dangerous', scale(0.15), { dir: -1 }],
-    's' : [sprite('stair'), scale(0.5), 'next-level'],
+    'a': [sprite('sm-alien'), 'sm-alien', 'dangerous', { dir: -1 }],
+    's' : [sprite('stairL'), 'next-level'],
+     't' : [sprite('stairR'), 'next-level'],
     'd' : [sprite('door'), 'next-level'],
-    'b' : [sprite('bad-guy'), 'bad-guy', 'dangerous', { dir: -1, timer: 0 }]
+    'b' : [sprite('bad-guy'), 'bad-guy', 'dangerous', scale(1),{ dir: -1, timer: 0 }]
 
   }
   addLevel(maps[level], levelConfig)
@@ -169,7 +169,7 @@ scene('game', (
 
   })
 
-  collides('dangerous', 'wall', (s) => {
+  collides('dangerous', 'wall1', (s) => {
     s.dir = -s.dir
   })
 
@@ -181,6 +181,14 @@ scene('game', (
   scene('lose', ({ score }) => {
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)])
   })
-start('game',
-  { level: 0, score: 0 }
+
+scene('landing', () => {
+ add([text('landing')])
+
+ 
+})
+
+
+start('landing',
+  // { level: 0, score: 0 }
 )
