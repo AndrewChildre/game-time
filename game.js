@@ -14,7 +14,8 @@ loadSprite('wall1', 'assets/wall1.png')
 
 
 
-loadSprite('floor', 'tileset/tileMapSpace08.png')
+loadSprite('test1', 'assets/stairs7.png')
+
 loadSprite('good-guy-rt', 'assets/hood_dudes33.png')
 loadSprite('good-guy-lt', 'assets/hood_dudes21.png')
 loadSprite('good-guy-down', 'assets/hood_dudes09.png')
@@ -30,6 +31,7 @@ loadSprite('kaboom', 'tileset/kaboom.png')
 
 scene('game', (
   { level, score }
+    
 ) => {
   layers(['backgrnd', 'obj', 'ui'], 'obj')
   const maps = [
@@ -70,7 +72,7 @@ scene('game', (
     
   
     'v': [sprite('wall1'), solid(), 'wall1'],
-    'f': [sprite('floor'), 'floor'],
+    
     'r' : [sprite('good-guy-rt'), 'ggr'],
     'l': [sprite('good-guy-lt'), 'ggl'],
     'd': [sprite('good-guy-down'), 'ggd'],
@@ -181,14 +183,12 @@ scene('game', (
   scene('lose', ({ score }) => {
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)])
   })
-
 scene('landing', () => {
- add([text('landing')])
-
- 
+  keyPress('s', () => {
+    go('game', { level: 0, score: 0 })
+  })
 })
 
+start('landing'
 
-start('landing',
-  // { level: 0, score: 0 }
 )
