@@ -221,7 +221,7 @@ scene('game', (
   scene('lose', ({ score }) => {
     add([text('Score: ' + score, 28), pos(610, 260)])
     add([text('Game Over', 50), pos(495, 150)])
-     add([text('Press " h " to return home', 10), pos(590, 380)])
+     add([text('Press " h " to return home', 12), pos(560, 380)])
     keyPress('h', () => {
       go('landing')
     })
@@ -230,7 +230,7 @@ scene('game', (
 
   scene('win', () => {
     add([text('WINNER', 50), pos(550, 200) ])
-    add([text('Press " h " to return home', 10), pos(565, 380)])
+    add([text('Press " h " to return home', 12), pos(540, 380)])
       keyPress('h', () => {
       go('landing')
     })
