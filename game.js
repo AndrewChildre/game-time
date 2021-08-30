@@ -21,12 +21,18 @@ loadSprite('good-guy-lt', 'assets/hood_dudes21.png')
 loadSprite('good-guy-down', 'assets/hood_dudes09.png')
 loadSprite('good-guy-up', 'assets/hood_dudes45.png')
 loadSprite('sm-alien', 'assets/hood_dudes03.png')
-loadSprite('stairL', 'assets/stairs0.png')
-loadSprite('stairR', 'assets/stairs2.png')
+loadSprite('stairL', 'assets/stairs6.png')
+loadSprite('stairR', 'assets/stairs4.png')
 loadSprite('door', 'assets/floor-door00.png')
 loadSprite('bad-guy', 'assets/bad-guy.png')
-loadSprite('kaboom', 'assets/fire1.png')
+loadSprite('kaboom', 'assets/fire.png')
 loadSprite('coverAngel', 'assets/coverAngel.png')
+loadSprite('rockWay', 'assets/floor-tile02.png')
+loadSprite('candle1', 'assets/candle1.png')
+loadSprite('vertCoffin','assets/vertCoffin.png')
+loadSprite('redBucket','assets/redBucket.png')
+loadSprite('candle2', 'assets/candle2.png')
+loadSprite('blueBucket', 'assets/blueBucket.png')
 
 
 
@@ -36,27 +42,27 @@ scene('game', (
 ) => {
   layers(['backgrnd', 'obj', 'ui'], 'obj')
   const maps = [
-    [
-      'vvvvvvvvvvvvdvvv',
-      'v              v',
-      'v       a      v',
-      'v              v',
-      'v              d',
-      'v              v',
-      'v        a     v',
-      'v              v',
-      'v    st        v',
-      'vvvvvvvvvvvvvvvv'
+    [ '                     ',
+      '     vvvvvvvvvvvvvvddvvv',
+      '     v           ctsc  v',
+      '     v       a         v',
+      '   vvv                 v',
+      '   vff          @      d',
+      '   vvv          o      v',
+      '     v        a        v',
+      '     v                 v',
+      '     v!              $ v',
+      '     vvvvvvvvvvvvvvvvvvv'
     ],
     ['vvvvvvvvvvvvvvvv',
+      'v        $     v',
+      'v          b    v',
       'v              v',
       'v              v',
-      'v              v',
-      'v              v',
-      'v           b  v',
+      'v  $           v',
       'd              v',
-      'v              v',
-      'v              v',
+      'v            oov',
+      'v           ooov',
       'vvvvvvvvvvvvvvvv'],
 
   ]
@@ -67,13 +73,13 @@ scene('game', (
   const levelConfig = {
     width: 48,
     height: 48,
+   
 
 
 
 
 
     'v': [sprite('wall1'), solid(), 'wall1'],
-
     'r': [sprite('good-guy-rt'), 'ggr'],
     'l': [sprite('good-guy-lt'), 'ggl'],
     'd': [sprite('good-guy-down'), 'ggd'],
@@ -82,25 +88,32 @@ scene('game', (
     's': [sprite('stairL'), 'next-level'],
     't': [sprite('stairR'), 'next-level'],
     'd': [sprite('door'), 'next-level'],
-    'b': [sprite('bad-guy'), 'bad-guy', 'dangerous', scale(1), { dir: -1, timer: 0 }]
+    'b': [sprite('bad-guy'), 'bad-guy', 'dangerous', scale(1), { dir: -1, timer: 0 }],
+    'f' : [sprite('rockWay'), 'rockWay'],
+    'c' : [sprite('candle1'), solid(), 'candle1'],
+    '@' : [sprite('vertCoffin', solid())],
+    'o' : [sprite('redBucket', solid())],
+    '!' : [sprite('candle2', solid())],
+    '$' : [sprite('blueBucket', solid())]
 
   }
   addLevel(maps[level], levelConfig)
 
   const scoreLabel = add([
     text('0'),
-    pos(250, 340),
+    pos(700, 550),
     layer('ui'),
     scale(3),
     {
       value: score,
-    }
+    },
   ])
+    add([text('Score:', 24), pos(550, 549)])
 
   const player = add([sprite('good-guy-rt'),
-  pos(5, 190),
+  pos(190, 240),
   {
-    dir: vec2(1, 0)
+    dir: vec2(1.3, 0)
   }])
 
 
@@ -151,6 +164,15 @@ scene('game', (
   action('sm-alien', (s) => {
     s.move(s.dir * alienSpeed, 0)
   })
+  collides('kaboom', 'sm-alien',  (k, s) => {
+    camShake(4)
+    wait(1, () => {
+      destroy(k)
+    })
+    destroy(s)
+    scoreLabel.value++
+    scoreLabel.text = scoreLabel.value })
+
 
   const badguySpeed = 60
   action('bad-guy', (s) => {
@@ -161,13 +183,13 @@ scene('game', (
       s.timer = rand(5)
     }
   })
-  collides('kaboom', 'bad-guy', (k, s) => {
-    camShake(3)
+  collides('kaboom', 'bad-guy',  (k, s) => {
+    camShake(4)
     wait(1, () => {
       destroy(k)
     })
     destroy(s)
-    scoreLabel.value++
+    scoreLabel.value+= 10
     scoreLabel.text = scoreLabel.value
     wait(1, () => {
       go('win')
@@ -221,6 +243,4 @@ scene('landing', () => {
   })
 })
 
-start('landing'
-
-)
+start('landing')
