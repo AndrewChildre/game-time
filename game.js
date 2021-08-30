@@ -195,8 +195,8 @@ scene('game', (
   })
 
   scene('win', () => {
-    add([text('WINNER', 50), pos(330, 220) ])
-    add([text('Press " h " to return home', 10), pos(335, 380)])
+    add([text('WINNER', 50), pos(550, 200) ])
+    add([text('Press " h " to return home', 10), pos(565, 380)])
       keyPress('h', () => {
       go('landing')
     })
@@ -206,14 +206,14 @@ scene('game', (
 scene('landing', () => {
 
 
-  add([sprite('coverAngel'), scale(2), pos(10, 20)])
-  add([text('Death Stalker', 50), pos(230, 100)])
-  add([text('Press " s " to start game', 20), origin('center'), pos(width() / 2, height() / 2)])
-  add([text('Objective:', 10), pos(10, 350)])
-  add([text('Find the Angel of Death and kill it', 9), pos(11, 365)])
-  add([text('Directions:', 10), pos(10, 390)])
-  add([text('Use arrows to move your hero', 9), pos(11, 405)])
-  add([text('Spacebar to shoot fiya', 9), pos(11, 420)])
+  add([sprite('coverAngel'), scale(2), pos(80, 70)])
+  add([text('Death Stalker', 50), pos(430, 100)])
+  add([text('Press " s " to start game', 20), pos(500, height() / 2)])
+  add([text('Objective:', 15), pos(50, 530)])
+  add([text('Find the Angel of Death and kill it!', 10), pos(53, 555)])
+  add([text('Directions:', 15), pos(50, 585)])
+  add([text('Use arrows to move your hero', 10), pos(53, 610)])
+  add([text('Spacebar to shoot fiya', 10), pos(53, 625)])
 
 
   keyPress('s', () => {
