@@ -26,7 +26,7 @@ loadSprite('stairR', 'assets/stairs2.png')
 loadSprite('door', 'assets/floor-door00.png')
 loadSprite('bad-guy', 'assets/bad-guy.png')
 loadSprite('kaboom', 'tileset/kaboom.png')
-
+loadSprite('coverAngel', 'assets/coverAngel.png')
 
 
 scene('game', (
@@ -183,10 +183,24 @@ scene('game', (
   scene('lose', ({ score }) => {
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)])
   })
+
+
 scene('landing', () => {
+
+
+  add([sprite('coverAngel'), scale(2), pos(10, 20)])
+ add([text('Death Stalker',  50 ), pos(230, 100, )])
+ add([text('Press " s " to start game', 20), origin('center'), pos(width() / 2, height() / 2)])
+ add([text('Objective:', 10), pos(10, 350)])
+ add([text('Find the Angel of Death and kill it', 9), pos(11, 365)])
+ add([text('Directions:', 10), pos(10, 390)])
+ add([text('Use arrows to move your hero',9 ), pos(11, 405)])
+ add([text('Spacebar to shoot fiya', 9), pos(11, 420)])
+ 
+  
   keyPress('s', () => {
     go('game', { level: 0, score: 0 })
-  })
+  }) 
 })
 
 start('landing'
