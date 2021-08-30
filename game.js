@@ -248,6 +248,7 @@ scene('landing', () => {
   add([text('Directions:', 15), pos(50, 585)])
   add([text('Use arrows to move your hero', 10), pos(53, 610)])
   add([text('Spacebar to shoot fiya', 10), pos(53, 625)])
+  add([text('Play on laptop, not mobile friendly', 10), pos(53, 641)])
 
 
   keyPress('s', () => {
