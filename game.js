@@ -1,7 +1,7 @@
 kaboom({
   global: true,
   fullscreen: true,
-  
+
   debug: true,
   clearColor: [0, 0, 0, 0.8],
 
@@ -25,13 +25,14 @@ loadSprite('stairL', 'assets/stairs0.png')
 loadSprite('stairR', 'assets/stairs2.png')
 loadSprite('door', 'assets/floor-door00.png')
 loadSprite('bad-guy', 'assets/bad-guy.png')
-loadSprite('kaboom', 'tileset/kaboom.png')
+loadSprite('kaboom', 'assets/fire1.png')
 loadSprite('coverAngel', 'assets/coverAngel.png')
+
 
 
 scene('game', (
   { level, score }
-    
+
 ) => {
   layers(['backgrnd', 'obj', 'ui'], 'obj')
   const maps = [
@@ -47,7 +48,7 @@ scene('game', (
       'v    st        v',
       'vvvvvvvvvvvvvvvv'
     ],
-    [ 'vvvvvvvvvvvvvvvv',
+    ['vvvvvvvvvvvvvvvv',
       'v              v',
       'v              v',
       'v              v',
@@ -69,19 +70,19 @@ scene('game', (
 
 
 
-    
-  
+
+
     'v': [sprite('wall1'), solid(), 'wall1'],
-    
-    'r' : [sprite('good-guy-rt'), 'ggr'],
+
+    'r': [sprite('good-guy-rt'), 'ggr'],
     'l': [sprite('good-guy-lt'), 'ggl'],
     'd': [sprite('good-guy-down'), 'ggd'],
     'u': [sprite('good-guy-up'), 'up'],
     'a': [sprite('sm-alien'), 'sm-alien', 'dangerous', { dir: -1 }],
-    's' : [sprite('stairL'), 'next-level'],
-     't' : [sprite('stairR'), 'next-level'],
-    'd' : [sprite('door'), 'next-level'],
-    'b' : [sprite('bad-guy'), 'bad-guy', 'dangerous', scale(1),{ dir: -1, timer: 0 }]
+    's': [sprite('stairL'), 'next-level'],
+    't': [sprite('stairR'), 'next-level'],
+    'd': [sprite('door'), 'next-level'],
+    'b': [sprite('bad-guy'), 'bad-guy', 'dangerous', scale(1), { dir: -1, timer: 0 }]
 
   }
   addLevel(maps[level], levelConfig)
@@ -99,7 +100,7 @@ scene('game', (
   const player = add([sprite('good-guy-rt'),
   pos(5, 190),
   {
-    dir: vec2(1,0)
+    dir: vec2(1, 0)
   }])
 
 
@@ -109,7 +110,7 @@ scene('game', (
 
   player.overlaps('next-level', () => {
     go('game', {
-      level: (level +1) % maps.length,
+      level: (level + 1) % maps.length,
       score: scoreLabel.value
     })
   })
@@ -136,11 +137,11 @@ scene('game', (
     player.dir = vec2(0, 1)
   })
 
-  function spawnFire (p) {
-   const obj = add([sprite('kaboom'), pos(p), 'kaboom'])
-   wait(1, () => {
-     destroy(obj)
-   })
+  function spawnFire(p) {
+    const obj = add([sprite('kaboom'), pos(p), 'kaboom'])
+    wait(1, () => {
+      destroy(obj)
+    })
   }
   keyPress('space', () => {
     spawnFire(player.pos.add(player.dir.scale(48)))
@@ -154,20 +155,23 @@ scene('game', (
   const badguySpeed = 60
   action('bad-guy', (s) => {
     s.move(0, s.dir * badguySpeed)
-    s.timer -=dt()
-    if(s.timer <= 0) {
+    s.timer -= dt()
+    if (s.timer <= 0) {
       s.dir = - s.dir
       s.timer = rand(5)
     }
   })
-  collides('kaboom','bad-guy', (k,s) => {
+  collides('kaboom', 'bad-guy', (k, s) => {
     camShake(3)
-      wait(1, () => {
-        destroy(k)
-      })
-      destroy(s)
-      scoreLabel.value++
-      scoreLabel.text = scoreLabel.value
+    wait(1, () => {
+      destroy(k)
+    })
+    destroy(s)
+    scoreLabel.value++
+    scoreLabel.text = scoreLabel.value
+    wait(1, () => {
+      go('win')
+    })
 
   })
 
@@ -181,7 +185,21 @@ scene('game', (
 
 }),
   scene('lose', ({ score }) => {
-    add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)])
+    add([text('Score: ' + score, 28), pos(610, 260)])
+    add([text('Game Over', 50), pos(495, 150)])
+     add([text('Press " h " to return home', 10), pos(590, 380)])
+    keyPress('h', () => {
+      go('landing')
+    })
+
+  })
+
+  scene('win', () => {
+    add([text('WINNER', 50), pos(330, 220) ])
+    add([text('Press " h " to return home', 10), pos(335, 380)])
+      keyPress('h', () => {
+      go('landing')
+    })
   })
 
 
@@ -189,18 +207,18 @@ scene('landing', () => {
 
 
   add([sprite('coverAngel'), scale(2), pos(10, 20)])
- add([text('Death Stalker',  50 ), pos(230, 100, )])
- add([text('Press " s " to start game', 20), origin('center'), pos(width() / 2, height() / 2)])
- add([text('Objective:', 10), pos(10, 350)])
- add([text('Find the Angel of Death and kill it', 9), pos(11, 365)])
- add([text('Directions:', 10), pos(10, 390)])
- add([text('Use arrows to move your hero',9 ), pos(11, 405)])
- add([text('Spacebar to shoot fiya', 9), pos(11, 420)])
- 
-  
+  add([text('Death Stalker', 50), pos(230, 100)])
+  add([text('Press " s " to start game', 20), origin('center'), pos(width() / 2, height() / 2)])
+  add([text('Objective:', 10), pos(10, 350)])
+  add([text('Find the Angel of Death and kill it', 9), pos(11, 365)])
+  add([text('Directions:', 10), pos(10, 390)])
+  add([text('Use arrows to move your hero', 9), pos(11, 405)])
+  add([text('Spacebar to shoot fiya', 9), pos(11, 420)])
+
+
   keyPress('s', () => {
     go('game', { level: 0, score: 0 })
-  }) 
+  })
 })
 
 start('landing'
