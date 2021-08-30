@@ -33,6 +33,12 @@ loadSprite('vertCoffin','assets/vertCoffin.png')
 loadSprite('redBucket','assets/redBucket.png')
 loadSprite('candle2', 'assets/candle2.png')
 loadSprite('blueBucket', 'assets/blueBucket.png')
+loadSprite('purpleCoffin', 'assets/purpleCoffin.png')
+loadSprite('blueBottle', 'assets/blueBottle.png')
+loadSprite('greenBottle', 'assets/greenBottle.png')
+loadSprite('redOpen', 'assets/redOpen.png')
+loadSprite('axe1', 'assets/axe1.png')
+loadSprite('sword1', 'assets/sword1.png')
 
 
 
@@ -44,23 +50,23 @@ scene('game', (
   const maps = [
     [ '                     ',
       '     vvvvvvvvvvvvvvddvvv',
-      '     v           ctsc  v',
-      '     v       a         v',
+      '     v$           ctsc v',
+      '     v       a       a v',
       '   vvv                 v',
-      '   vff          @      d',
-      '   vvv          o      v',
-      '     v        a        v',
-      '     v                 v',
-      '     v!              $ v',
+      '   vff   vvvv   @o     d',
+      '   vvv   vnnv   ^      v',
+      '     v   vvvv          v',
+      '     v    axv   a      v',
+      '     v     !v       g$pv',
       '     vvvvvvvvvvvvvvvvvvv'
     ],
-    ['vvvvvvvvvvvvvvvv',
+    ['vvvvvvvvvvvvvvvvv',
       'v        $     v',
-      'v          b    v',
+      'v    &    b    v',
+      'v             av',
       'v              v',
-      'v              v',
-      'v  $           v',
-      'd              v',
+      'v  $p          v',
+      'd        a     v',
       'v            oov',
       'v           ooov',
       'vvvvvvvvvvvvvvvv'],
@@ -94,7 +100,13 @@ scene('game', (
     '@' : [sprite('vertCoffin', solid())],
     'o' : [sprite('redBucket', solid())],
     '!' : [sprite('candle2', solid())],
-    '$' : [sprite('blueBucket', solid())]
+    '$' : [sprite('blueBucket', solid())],
+    '&' : [sprite('purpleCoffin', solid())],
+    'p' : [sprite('blueBottle', solid())],
+    'g' : [sprite('greenBottle'), solid()],
+    'n' : [sprite('redOpen'), solid(), 'wall1'],
+    'x' : [sprite('axe1', solid())],
+    '^' : [sprite('sword1')]
 
   }
   addLevel(maps[level], levelConfig)
@@ -170,7 +182,7 @@ scene('game', (
       destroy(k)
     })
     destroy(s)
-    scoreLabel.value++
+    scoreLabel.value+= 5
     scoreLabel.text = scoreLabel.value })
 
 
