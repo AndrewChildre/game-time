@@ -14,7 +14,12 @@ Use arrows to move your hero :arrow_up: :arrow_down: :arrow_left: :arrow_right:<
 Kill small monsters 5 points :coffin:<br/>
 Kill Angel of Death 25 points  :skull:
 
+## Deployed Link
+https://death-stalker.netlify.app/
 
+## Created by
+*Andrew Childre*
+[Portfolio Site](https://andrewchildre.netlify.app/)
 
 ## Development Story
 
