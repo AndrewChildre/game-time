@@ -18,7 +18,7 @@ Kill Angel of Death 25 points  :skull:
 https://death-stalker.netlify.app/
 
 ## Created by
-*Andrew Childre*
+*Andrew Childre* <br/>
 [Portfolio Site](https://andrewchildre.netlify.app/)
 
 ## Development Story
